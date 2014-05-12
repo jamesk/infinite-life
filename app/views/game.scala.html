@@ -1,0 +1,72 @@
+@* game Template File *@
+
+@main("Life Game") {
+	<canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #c3c3c3;">
+		Your browser does not support the HTML5 canvas tag.
+	</canvas>
+} {
+	<script>
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		ctx.fillStyle = "#FF0000";
+
+		function drawGrid(canvasElement, gridLineWidth, numberOfSquares)
+		{
+			var totalSize = canvasElement.height;
+			var ctx = canvasElement.getContext("2d");
+			var squareSize = totalSize / numberOfSquares;
+
+			
+			var tempCanvas = document.createElement('canvas');
+			tempCanvas.height = squareSize;
+			tempCanvas.width = squareSize;
+
+			var tempCtx = tempCanvas.getContext("2d");
+			tempCtx.strokeStyle = "blue";
+			tempCtx.lineWidth = gridLineWidth;
+			 
+			tempCtx.rect(0, 0, tempCanvas.width, tempCanvas.height);
+			tempCtx.stroke();
+			
+			var pattern = ctx.createPattern(tempCanvas, "repeat");
+			ctx.rect(0, 0,1000,1000);
+			ctx.fillStyle = pattern;
+			ctx.fill();
+
+			return squareSize;
+		}
+
+		//TODO: this doesn't work, keep at 1 pixel width for now
+		var gridLineWidth = 1
+		var numberOfSquares = 100;
+		var size = drawGrid(c, gridLineWidth, numberOfSquares);
+
+		function fillSquare(canvasElement, gridSize, gridLineWidth, x, y, colour)
+		{
+			var ctx = canvasElement.getContext("2d");
+
+			var oldColour = ctx.fillStyle;
+			ctx.fillStyle = colour;
+
+			ctx.fillRect(gridSize * x + gridLineWidth, gridSize * y + gridLineWidth, gridSize - 2 * gridLineWidth, gridSize - 2 * gridLineWidth);
+
+			ctx.fillStyle = oldColour;
+		}
+
+		function manySquaresTest()
+		{
+			for (var i = 0; i < numberOfSquares; i++)
+			{
+				for (var j = 0; j < numberOfSquares; j++)
+				{
+					fillSquare(c, size, gridLineWidth, i, j, 'red');						
+				}
+			}
+		}
+
+		c.onclick = manySquaresTest;
+		
+		fillSquare(c, size, gridLineWidth, 4, 1, 'green');
+		fillSquare(c, size, gridLineWidth, 4, 2, 'green');
+	</script>
+}
