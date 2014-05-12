@@ -53,20 +53,24 @@
 			ctx.fillStyle = oldColour;
 		}
 
+		function getRandomColor() 
+		{
+		  var hex = Math.floor(Math.random() * 0xFFFFFF);
+		  return "#" + ("000000" + hex.toString(16)).substr(-6);
+		}
+		
 		function manySquaresTest()
 		{
 			for (var i = 0; i < numberOfSquares; i++)
 			{
 				for (var j = 0; j < numberOfSquares; j++)
 				{
-					fillSquare(c, size, gridLineWidth, i, j, 'red');						
+					fillSquare(c, size, gridLineWidth, i, j, getRandomColor());						
 				}
 			}
 		}
 
 		c.onclick = manySquaresTest;
 		
-		fillSquare(c, size, gridLineWidth, 4, 1, 'green');
-		fillSquare(c, size, gridLineWidth, 4, 2, 'green');
 	</script>
 }
